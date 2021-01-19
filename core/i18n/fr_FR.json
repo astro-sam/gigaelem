@@ -1,0 +1,27 @@
+{
+    "plugins\/gigaelem\/plugin_info\/info.xml": {
+        "Plugin pour contrôler son thermostat Netatmo": "Plugin pour contrôler son thermostat Netatmo"
+    },
+    "plugins\/gigaelem\/plugin_info\/configuration.php": {
+        "user_id": "Id utilisateur",
+		"Client ID": "Client ID"
+    },
+    "plugins\/gigaelem\/core\/class\/gigaelem.class.php": {
+		"sensor_not_calibrated":"Capteur non calibré"
+    },
+    "plugins\/gigaelem\/desktop\/php\/gigaelem.php": {
+        "Gestion": "Gestion",
+        "Santé": "Santé"
+    },
+    "plugins\/gigaelem\/desktop\/js\/gigaelem.js": {
+        "Nom": "Nom"
+    },
+    "plugins\/gigaelem\/desktop\/modal\/health.php": {
+        "Module": "Module",
+        "ID": "ID",
+        "IP": "IP",
+        "Date création": "Date création",
+        "Adresses Macs": "Adresses Macs",
+        "Firmwares": "Firmwares"
+    }
+}

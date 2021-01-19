@@ -1,0 +1,82 @@
+<div class="eqLogic-widget eqLogic allowResize allowReorderCmd" style="width: 350px; height: 100px;border:#border#;border-radius:#border-radius#;background-color: #background-color#;color: #color#;#style#" data-eqLogic_id="#id#" data-eqLogic_uid="#uid#" data-version="#version#">
+  <link rel="stylesheet" nonce="" href="plugins/gigaelem/core/template/dashboard/eqLogic.css">     
+    <div>
+        <span class="statusCmd" style="position : absolute;bottom : 3px;left : 5px; width : 30px;z-index: 500;"></span>
+        <i class='fa fa-refresh pull-right cursor refresh tooltips' title="Rafraîchir" style="margin-top: 6px;margin-right: 3px; #hideEqLogicName#"></i>
+        <center class="widget-name"><a href="#eqLink#" style="font-size : 1.3em;#hideEqLogicName#">#name_display# <span style="font-size: 0.85em;position: relative;top:-2px;">#object_name#</span></a></center>
+		<!-- actions on widget-->
+		<span class="cmd cmd-widget" data-cmd_id="#refresh_id#" style="display:none;"></span>
+		<span class="cmd cmd-widget" data-cmd_id="#home_id#" style="display:none;"></span>
+		<span class="cmd cmd-widget" data-cmd_id="#away_id#" style="display:none;"></span>
+		<span class="cmd cmd-widget" data-cmd_id="#night_id#" style="display:none;"></span>
+		<span class="cmd cmd-widget" data-cmd_id="#custom_id#" style="display:none;"></span>
+		<!-- start display -->
+		<div class="ge-widget">
+			<div class="ge-status-tile">
+				<span class="status ge-status-icon cursor tooltips" title="#status_message#"></span>
+			</div>
+			<div class="ge-mode-tile">
+				<span class="custom ge-mode-icon ge-custom-off cursor tooltips" title="Personnalisé"/>
+				<span class="night ge-mode-icon ge-night-off cursor tooltips" title="Nuit"/>
+				<span class="away ge-mode-icon ge-away-off cursor tooltips" title="Absence"/>
+				<span class="home   ge-mode-icon ge-home-off   cursor tooltips" title="Présence"/>
+			</div>
+			<div class="ge-modelabel-tile"><span class="ge-modelabel-left">Mode: </span><span class="ge-modelabel-right tooltips" title="Mode courant">#mode_label#</span></div>
+        </div>
+		<!-- animate -->
+		<script>
+		$('.eqLogic[data-eqLogic_uid=#uid#] .refresh').on('click', function () {
+			jeedom.cmd.execute({id: '#refresh_id#'});
+		});
+		$('.eqLogic[data-eqLogic_uid=#uid#] .home').on('click', function () {
+			$('.eqLogic[data-eqLogic_uid=#uid#] .home').html('<img class="ge-mode-rotate" src="/plugins/gigaelem/core/template/img/gear_small.png">') ;
+			$('.eqLogic[data-eqLogic_uid=#uid#] .home').toggleClass('ge-home-off ge-no-mode') ;
+			jeedom.cmd.execute({id: '#home_id#'});
+		});
+		$('.eqLogic[data-eqLogic_uid=#uid#] .away').on('click', function () {
+			$('.eqLogic[data-eqLogic_uid=#uid#] .away').html('<img class="ge-mode-rotate" src="/plugins/gigaelem/core/template/img/gear_small.png">') ;
+			$('.eqLogic[data-eqLogic_uid=#uid#] .away').toggleClass('ge-away-off ge-no-mode') ;
+			jeedom.cmd.execute({id: '#away_id#'});
+		});
+		$('.eqLogic[data-eqLogic_uid=#uid#] .night').on('click', function () {
+			$('.eqLogic[data-eqLogic_uid=#uid#] .night').html('<img class="ge-mode-rotate" src="/plugins/gigaelem/core/template/img/gear_small.png">') ;
+			$('.eqLogic[data-eqLogic_uid=#uid#] .night').toggleClass('ge-night-off ge-no-mode') ;
+			jeedom.cmd.execute({id: '#night_id#'});
+		});
+		$('.eqLogic[data-eqLogic_uid=#uid#] .custom').on('click', function () {
+			$('.eqLogic[data-eqLogic_uid=#uid#] .custom').html('<img class="ge-mode-rotate" src="/plugins/gigaelem/core/template/img/gear_small.png">') ;
+			$('.eqLogic[data-eqLogic_uid=#uid#] .custom').toggleClass('ge-custom-off ge-no-mode') ;
+			jeedom.cmd.execute({id: '#custom_id#'});
+		});
+			
+		<!-- model -->
+		$('.eqLogic[data-eqLogic_uid=#uid#] .status').on('click', function () {
+		$('#md_modal').dialog({title: "{{Gigaset Elements}}"});
+		$('#md_modal').load('index.php?v=d&plugin=gigaelem&modal=info.gigaelem').dialog('open');
+		});
+
+
+		<!-- update status -->
+		if ('#status#' == 'green') {
+			$('.eqLogic[data-eqLogic_uid=#uid#] .status').addClass('ge-status-green') ;
+		} else if ('#status#' == 'orange') {
+			$('.eqLogic[data-eqLogic_uid=#uid#] .status').addClass('ge-status-orange') ;
+		} else if ('#status#' == 'red') {
+			$('.eqLogic[data-eqLogic_uid=#uid#] .status').addClass('ge-status-red') ;
+		} else if ('#status#' == 'red_smoke') {
+			$('.eqLogic[data-eqLogic_uid=#uid#] .status').addClass('ge-status-red-smoke') ;
+		}
+
+
+		if ('#mode#' == 'home') {
+			$('.eqLogic[data-eqLogic_uid=#uid#] .home').toggleClass('ge-home-off ge-home-on') ;
+		} else if ('#mode#' == 'away') {
+			$('.eqLogic[data-eqLogic_uid=#uid#] .away').toggleClass('ge-away-off ge-away-on') ;
+		} else if ('#mode#' == 'night') {
+			$('.eqLogic[data-eqLogic_uid=#uid#] .night').toggleClass('ge-night-off ge-night-on') ;
+		} else if ('#mode#' == 'custom') {
+			$('.eqLogic[data-eqLogic_uid=#uid#] .custom').toggleClass('ge-custom-off ge-custom-on') ;
+		}
+		</script>
+    </div>
+</div>
