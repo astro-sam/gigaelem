@@ -9,8 +9,8 @@
 	"hasDependency" : false,
 	"hasOwnDeamon" : false,
 	"maxDependancyInstallTime" : 0,
-	"changelog" : "https://astro-sam.github.io/gigaelem/#language#/changelog",
-	"documentation" : "https://astro-sam.github.io/gigaelem/#language#/",
+	"changelog" : "https://astro-sam.github.io/jeedom-gigaelem/#language#/changelog",
+	"documentation" : "https://astro-sam.github.io/jeedom-gigaelem/#language#/",
 	"language" : ["fr_FR","en_US"],
 	"compatibility" : ["smart","rpi","diy"]
 }
