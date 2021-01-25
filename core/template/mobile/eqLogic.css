@@ -1,6 +1,6 @@
 .ge-widget {
 	border: 0px solid black;
-	margin-top: -5px;
+	margin-top: 0px;
 	vertical-align: top;
 	padding: 0px;
 }
@@ -51,6 +51,7 @@
 }
 
 .ge-mode-tile {
+	/* border: 1px solid black; */
 	vertical-align: top;
 	display: inline-block;
 	float: right;

@@ -61,57 +61,6 @@ $eqLogics = eqLogic::byType($plugin->getId());
 				</a>
 			</span>
 		</div>
-										  
-																																																														
-																																												
-																																							
-	   
-																							  
-																 
-		   
-   
-								  
-				  
-					   
-															 
-									
-																					  
-									  
-																												  
-																																											 
-					  
-				  
-									
-																			   
-									  
-																									
-														   
-							 
-									   
-																					 
- 
-  
-							
-					 
-				 
-							
-									  
-									  
-					  
-																							  
-														   
-																																														
-									
-					 
-					
-					 
-				 
-						 
-												
-						
-																																										 
-																																										  
-		
 		<!-- Onglets -->
 		<ul class="nav nav-tabs" role="tablist">
 			<li role="presentation"><a href="#" class="eqLogicAction" aria-controls="home" role="tab" data-toggle="tab" data-action="returnToThumbnailDisplay"><i class="fas fa-arrow-circle-left"></i></a></li>
@@ -181,14 +130,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 								</div>
 							</div>
 							<br>
-
 							<legend><i class="fas fa-cogs"></i> {{Paramètres}}</legend>
-							<div class="form-group">
-								<label class="col-sm-3 control-label">{{Paramètre n°1}}</label>
-								<div class="col-sm-7">
-									<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="param1" placeholder="{{Paramètre n°1}}"/>
-								</div>
-							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">{{Type équipement}}
 									<sup><i class="fas fa-question-circle tooltips" title="Type d'élement Gigaset"></i></sup>
@@ -201,11 +143,10 @@ $eqLogics = eqLogic::byType($plugin->getId());
 													  
 									<select id="sel_object" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="eq_type">
 										<option value="1">{{Base}}</option>
+										<!--
 										<option value="2">{{Camera}}</option>
-												
-																															  
 										<option value="3">{{Evenements}}</option>
-								   
+										-->
 												
 									
 									</select>
@@ -221,13 +162,13 @@ $eqLogics = eqLogic::byType($plugin->getId());
 									<select id="sel_tuile" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="eq_widget">
 										<option value="custom" selected="selected"> {{Gigaset}}</option>
 										<!--<option value="plug2" > {{Tuile2}}</option>-->
-										<option value="core"> {{Jeedom standard}}</option>
+										<option value="core"> {{Core - Jeedom standard}}</option>
 									</select>
 								</div>
 							</div> 	
 							<!-- Champ de saisie du cron d'auto-actualisation + assistant cron -->
 							<!-- La fonction cron de la classe du plugin doit contenir le code prévu pour que ce champ soit fonctionnel -->
-							<div class="form-group">
+							<!-- <div class="form-group">
 								<label class="col-sm-3 control-label">{{Auto-actualisation}}
 									<sup><i class="fas fa-question-circle tooltips" title="{{Fréquence de rafraîchissement de l'équipement}}"></i></sup>
 								</label>
@@ -241,7 +182,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 										</span>
 									</div>
 								</div>
-							</div>
+							</div> -->
 						</div>
 
 						<!-- Partie droite de l'onglet "Équipement" -->

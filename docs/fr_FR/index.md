@@ -28,7 +28,7 @@ L'équipement fonctionne de façon similaire au plugin "mode", mais remonte en p
 
 ![gigaelem02](../images/gigaelem02.png)
 
-> **camera** : permet d'afficher les flux sur les smart cameras (nécessite le plugin camera pour fonctionner)
+> **camera** : permet d'afficher les flux sur les smart cameras (nécessitera peut-être le plugin camera pour fonctionner)
  -- a venir --
  
 > **capteur** : représente les capteurs "classiques" type porte/fenetre/mouvement
@@ -53,5 +53,15 @@ FAQ
 Comment est faite la synchro ?
 
 :   Il n'y a pas de webhook à ma connaissance, on a donc un "polling" de base, fait toutes les 5 minutes (cron5) sauf pour les évenements dont l'actualisation peut etre reglée dans la configuration de l'équipement
+:   L'API est en PHP direct, il n'y a pas de Daemon ni d'interface Python
+
+Ca ne fonctionne pas ! 
+
+:   Tout d'abord, pour comprendre ce qu'il se passe, il faut activer les logs, au moins au niveau "info". si on voit qu'il y a un probleme que l'on ne peut pas identifier, le mode "debug" produit une log très verbeuse qui devrait permettre d'identifer précisément la cause du problème.
+
+Remerciements
+===
+
+l'API est largement inspirée du superbe travail fait par Dynastic Orpheus sur l'interface REST Gigaset, dispo ici : https://github.com/dynasticorpheus/gigasetelements-cli
 
 

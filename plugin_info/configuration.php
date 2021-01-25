@@ -25,7 +25,7 @@ if (!isConnect()) {
 <form class="form-horizontal">
     <fieldset>
         <div class="form-group">
-            <label class="col-sm-2 control-label">{{user_id}}</label>
+            <label class="col-sm-2 control-label">{{Identifiant}}</label>
             <div class="col-sm-3">
                 <input type="text" class="configKey form-control" data-l1key="username" placeholder="Identifiant utilisateur"/>
             </div>
@@ -43,8 +43,8 @@ if (!isConnect()) {
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="col-lg-2 control-label">{{Latence API}}&nbsp;<sup><i class="fas fa-question-circle tooltips" title="Temps de réponse de l'API Gigaset. Si la vérification est sollicitée trop rapidement apres un changement de mode, le statut n'est pas a jour..."></i></sup></label>
-			<div class="col-lg-2">
+			<label class="col-sm-2 control-label">{{Latence API}}&nbsp;<sup><i class="fas fa-question-circle tooltips" title="Temps de réponse de l'API Gigaset. Si la vérification est sollicitée trop rapidement apres un changement de mode, le statut n'est pas a jour..."></i></sup></label>
+			<div class="col-sm-3">
 				<select class="configKey form-control" data-l1key="api_latency">
 					<option value="2">{{2 secondes}}</option>
 					<option value="5" selected="selected">{{5 secondes - recommandé}}</option>

@@ -3,18 +3,14 @@
 	"name" : "Gigaset Elements",
 	"description" : "Gestion du système d'alarme/domotique Gigaset Elements",
 	"licence" : "free",
-	"author" : "Jean-Marie Bonnefont",
+	"author" : "astrosam",
 	"require" : "4.0",
 	"category" : "home automation protocol",
 	"hasDependency" : false,
 	"hasOwnDeamon" : false,
 	"maxDependancyInstallTime" : 0,
-	"changelog" : "https://astro-sam.github.io/jeedom/plugins/gigaelem/#language#/changelog",
-	"documentation" : "http://astro-sam.github.io/jeedom/plugins/gigaelem/#language#/",
-	"link" : {
-		"forum":"Lien vers le forum",
-		"video" : "Lien vers une video"
-	},
+	"changelog" : "https://astro-sam.github.io/gigaelem/#language#/changelog",
+	"documentation" : "https://astro-sam.github.io/gigaelem/#language#/",
 	"language" : ["fr_FR","en_US"],
 	"compatibility" : ["smart","rpi","diy"]
 }

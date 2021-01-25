@@ -6,11 +6,10 @@
 
 # 25/01/2021
 
-- Publication initiale sur le market
-
-# 19/01/2021
-
+> Version initiale 4.0
 - Création de la documentation
+- nettoyage de code
+- gestion des logs
 
 # 18/01/2021
 

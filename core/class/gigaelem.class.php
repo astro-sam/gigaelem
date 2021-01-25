@@ -50,8 +50,11 @@ class gigaelem extends eqLogic {
 
 
     public static function GetApiLog() {
-		foreach (self::$_client->ge_log as $line) {
-		    log::add('gigaelem', 'debug', "<GEApiClient> - ".$line);
+		// debug:100 | info:200 | warning:300 | error:400 probably
+		if (log::getLogLevel('gigaelem') == '100') {
+			foreach (self::$_client->ge_log as $line) {
+				log::add('gigaelem', 'debug', "<GEApiClient> - ".$line);
+			}
 		}
 		self::$_client->ge_log = [];
 	}
@@ -60,9 +63,11 @@ class gigaelem extends eqLogic {
 	 */
 	public static function getClient() {
 		if (self::$_client == null) {
+			if (log::getLogLevel('gigaelem') == '100') $with_log = true; else $with_log = false;
 			 self::$_client =  new GigasetElementsApiClient(array(
 				'username' => config::byKey('username', 'gigaelem'),
-				'password' => config::byKey('password', 'gigaelem')
+				'password' => config::byKey('password', 'gigaelem'),
+				'withlog' => $with_log
 			 ));
 		}
 		try	{
@@ -102,7 +107,7 @@ class gigaelem extends eqLogic {
 	public static function getAlarmMode() {
 		log::add('gigaelem', 'debug', "<getAlarmMode> - recuperation mode alarme");
 		$client = self::getClient();
-		if (!$client) return false;
+		if (!$client) return array("active_mode" => "disconnected", "requestedMode" => "disconnected", "modeTransitionInProgress" => false);
 		return $client->getFromBase("modes");
 		// active_mode": "home",
         // requestedMode": "home",
@@ -155,7 +160,7 @@ class gigaelem extends eqLogic {
 				if (!is_object($cmd)) {//Si la commande n'existe pas
 					continue; //continue la boucle
 				}
-				log::add('gigaelem', 'debug', "<cron> - refresh equipement ".$element->getName());
+				log::add('gigaelem', 'info', "<cron> - refresh equipement ".$element->getName());
 				$cmd->execCmd(); // la commande existe on la lance
 			}
 		}
@@ -334,7 +339,7 @@ class gigaelem extends eqLogic {
 		);
 		// permet l'activation de la tuile custom ou non selon configuration
       	if ($this->getConfiguration('eq_widget','') == "core"){
-          	self::$_widgetPossibility = array('custom' => 'layout');
+          	self::$_widgetPossibility = array('custom' => false);
           	return eqLogic::toHtml($_version);
         }
       	//récupère les informations de l'équipement
@@ -366,6 +371,8 @@ class gigaelem extends eqLogic {
 		$replace['#status#'] = $current_status->execCmd();
 		$status_message = $this->getCmd(null, 'status_message');
 		$replace['#status_message#'] = $_status_label[$status_message->execCmd()];
+		// disconnected case
+		if ($replace['#mode#']=='disconnected') $replace['#status_message#'] = $_status_label['no_connection'];
 		// actions
 		$refresh = $this->getCmd(null, 'refresh');
 		$replace['#refresh_id#'] = $refresh->getId();
@@ -379,7 +386,9 @@ class gigaelem extends eqLogic {
 		$replace['#custom_id#'] = $custom->getId();
 		//
 		// for TEST $replace['#debug_frame#'] = implode("|",array_keys($replace));
-		//  retourne le template qui se nomme eqlogic pour le widget	  
+		//  retourne le template qui se nomme eqlogic pour le widget
+		// in case version match needed : log::add('gigaelem', 'error', "<toHtml> - version 41 : ".jeedom::version());
+
 		$template = getTemplate('core', $version, 'eqLogic', 'gigaelem');
 		return $this->postToHtml($_version, template_replace($replace, $template)); 
    
@@ -419,7 +428,9 @@ class gigaelemCmd extends cmd {
     public function execute($_options = array()) {
 		$eqlogic = $this->getEqLogic(); //récupère l'éqlogic de la commande $this
 		log::add('gigaelem', 'debug', "<execute> - commande : ".$this->getLogicalId());
+
 		// detailed info
+		log::add('gigaelem','info','<execute> - get Ge Status.');
 		$eqlogic->_status_info = $eqlogic->getGeStatus();
 		if (!isset($eqlogic->_status_info['status_msg_id']))
 			$eqlogic->_status_info['status_msg_id'] = 'good'; // quand tout va bien, pas de message...
@@ -428,19 +439,18 @@ class gigaelemCmd extends cmd {
 		//
 		$modeChange = false;
 		$_modeinfo = $eqlogic->getAlarmMode();
-		if (!$_modeinfo) {
-			$current_mode = "disconnected";
-			$target_mode = "disconnected";
-			$mode_in_progress = "disconnected";
-		} else {
-			$current_mode = $_modeinfo['active_mode'];
-			$target_mode = $_modeinfo['requestedMode'];
-			$mode_in_progress = $_modeinfo['modeTransitionInProgress'];
+		//
+		$current_mode = $_modeinfo['active_mode'];
+		$target_mode = $_modeinfo['requestedMode'];
+		$mode_in_progress = $_modeinfo['modeTransitionInProgress'];
+		if ($current_mode == 'disconnected') {
+			log::add('gigaelem','warning','<execute> - Could not connect.');
 		}
 		//
-		switch ($this->getLogicalId()) {	//vérifie le logicalid de la commande 			
+		switch ($this->getLogicalId()) {	
 			// mode actuel
 			case 'refresh':
+				log::add('gigaelem','info','<execute> - Refresh.');
 				$eqlogic->checkAndUpdateCmd('status', $eqlogic->_status_info['system_health']);
 				$eqlogic->checkAndUpdateCmd('status_message', $eqlogic->_status_info['status_msg_id']);
 				$eqlogic->checkAndUpdateCmd('mode', $current_mode);
@@ -494,7 +504,7 @@ class gigaelemCmd extends cmd {
 			}
 			// au final : on recupère le nouveau mode
 			$check_mode = $check_mode_info["active_mode"];
-			log::add('gigaelem', 'debug', "<execute> - nouveau mode : [".$check_mode."]");
+			log::add('gigaelem', 'info', "<execute> - nouveau mode : [".$check_mode."]");
 			$eqlogic->checkAndUpdateCmd('mode', $check_mode); // on ne met à jour que le mode ici, pas le reste
 			$eqlogic->refreshWidget();
 			

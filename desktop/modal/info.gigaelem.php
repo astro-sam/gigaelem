@@ -20,24 +20,27 @@ if (!isConnect('admin')) {
 }
 ?>
 <div class="col-xs-12 eqLogic">
-	<ul class="nav nav-tabs">
+	<ul class="nav nav-tabs" role="tab-list">
 		<li role="presentation" class="active">
 			<a href="#eventsTab" role="tab" data-toggle="tab">
-				<i class="fas fa-list-alt"/>
-					Evenements
+				<i class="fas fa-list-alt"></i>
+					<span class="hidden-xs">Evenements</span>
 			</a>
 		</li>
 		<li role="presentation">
 			<a href="#elementsTab" role="tab" data-toggle="tab">
-				<i class="fas fa-cubes"/>
-					Elements
+				<i class="fas fa-cubes"></i>
+					<span class="hidden-xs">Elements</span>
 			</a>
-
 		</li>
 	</ul>
 	<div class="tab-content" style="height:calc(100% - 50px);overflow:auto;overflow-x: hidden;">
 		<div role="tabpanel" class="tab-pane active" id="eventsTab">
-		Evenements
+		<script>
+			$('.eqLogic[data-eqLogic_uid=#uid#] .refresh').on('click', function () {
+				jeedom.cmd.execute({id: '#refresh_id#'});
+			});
+		</script>
 		</div>
 		<div role="tabpanel" class="tab-pane" id="elementsTab">
 		Elements
